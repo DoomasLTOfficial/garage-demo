@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Garage Barbershop — Kaunas</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #181614;
+    --surface: #201e1b;
+    --card: #272420;
+    --rust: #c4501f;
+    --rust-light: #e0622e;
+    --off: #eee8df;
+    --muted: #6e6a64;
+    --warm: #a09890;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--off);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    line-height: 1.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 52px;
+    background: rgba(24,22,20,0.97);
+    border-bottom: 1px solid #2e2b27;
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem; letter-spacing: 0.12em; color: var(--off);
+  }
+  .nav-logo em { color: var(--rust); font-style: normal; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--off); }
+
+  /* HERO — split, image left full height, content right */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 60px;
+  }
+  .hero-img {
+    position: relative; overflow: hidden;
+  }
+  .hero-img-bg {
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=900&q=80') center/cover no-repeat;
+  }
+  .hero-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, transparent 70%, var(--bg));
+  }
+
+  /* big vertical text on the image */
+  .hero-img-label {
+    position: absolute; bottom: 48px; left: 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(238,232,223,0.4);
+    writing-mode: vertical-rl; transform: rotate(180deg);
+  }
+
+  .hero-content {
+    padding: 80px 56px 56px 40px;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    background: var(--bg);
+  }
+  .hero-top {}
+  .hero-eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--rust); margin-bottom: 20px; display: block;
+    animation: fadeUp 0.5s 0.1s both;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4.5rem, 9vw, 8rem);
+    line-height: 0.9; color: var(--off);
+    margin-bottom: 24px;
+    animation: fadeUp 0.5s 0.2s both;
+  }
+  .hero-title .line2 { color: var(--rust); display: block; }
+  .hero-desc {
+    font-size: 0.95rem; line-height: 1.75; color: var(--warm);
+    max-width: 360px;
+    animation: fadeUp 0.5s 0.3s both;
+  }
+
+  /* stats in the middle */
+  .hero-stats {
+    display: flex; gap: 0;
+    border-top: 1px solid #2e2b27; border-bottom: 1px solid #2e2b27;
+    animation: fadeUp 0.5s 0.4s both;
+  }
+  .hero-stat {
+    flex: 1; padding: 20px 24px;
+    border-right: 1px solid #2e2b27;
+  }
+  .hero-stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem; color: var(--rust); line-height: 1; display: block;
+  }
+  .stat-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+  /* CTA bottom-right */
+  .hero-bottom {
+    display: flex; justify-content: flex-end; align-items: center; gap: 20px;
+    animation: fadeUp 0.5s 0.5s both;
+  }
+  .hero-note { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em; }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: var(--rust); color: var(--off);
+    padding: 14px 36px; font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600; font-size: 0.8rem; letter-spacing: 0.14em;
+    text-transform: uppercase; text-decoration: none; display: inline-block;
+    transition: background 0.3s, transform 0.2s; white-space: nowrap;
+  }
+  .btn-primary:hover { background: var(--rust-light); transform: translateY(-2px); }
+  .btn-secondary {
+    color: var(--rust); text-decoration: none;
+    font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+    font-weight: 600; border-bottom: 1px solid var(--rust); padding-bottom: 2px;
+    transition: color 0.3s, border-color 0.3s; white-space: nowrap;
+  }
+  .btn-secondary:hover { color: var(--rust-light); border-color: var(--rust-light); }
+
+  /* REVIEWS STRIP — comes before services */
+  .reviews-strip {
+    background: var(--rust); padding: 72px 52px;
+  }
+  .reviews-strip-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 40px;
+  }
+  .strip-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.2rem); color: var(--off); letter-spacing: 0.02em;
+  }
+  .strip-rating {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; color: rgba(238,232,223,0.6); letter-spacing: 0.1em;
+  }
+  .reviews-ticker {
+    display: flex; gap: 24px; overflow: hidden;
+  }
+  .review-pill {
+    background: rgba(0,0,0,0.2); padding: 24px 28px;
+    flex: 1; min-width: 0;
+  }
+  .review-pill-stars { color: var(--off); font-size: 0.65rem; letter-spacing: 4px; margin-bottom: 10px; opacity: 0.7; }
+  .review-pill-text { font-size: 0.9rem; line-height: 1.6; color: var(--off); font-style: italic; margin-bottom: 12px; opacity: 0.85; }
+  .review-pill-author { font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.08em; color: var(--off); }
+
+  /* SERVICES */
+  .services-section { padding: 96px 52px; background: var(--bg); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 52px; }
+  .eyebrow { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--rust); margin-bottom: 10px; display: block; }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+    color: var(--off); line-height: 1; letter-spacing: 0.02em;
+  }
+  .services-note { font-size: 0.8rem; color: var(--muted); max-width: 200px; text-align: right; line-height: 1.6; }
+
+  /* asymmetric 2-col service cards */
+  .services-grid { display: flex; flex-direction: column; gap: 1px; background: #2a2724; }
+  .service-item {
+    display: grid; grid-template-columns: 1fr auto;
+    background: var(--bg); padding: 32px 0;
+    transition: background 0.25s;
+    align-items: start; gap: 32px;
+  }
+  .service-item:hover { background: var(--surface); }
+  .service-item + .service-item { border-top: 1px solid #2a2724; }
+  .svc-left {}
+  .svc-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--off);
+    letter-spacing: 0.02em; line-height: 1; margin-bottom: 8px;
+  }
+  .svc-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; max-width: 400px; }
+  .svc-right { text-align: right; }
+  .svc-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem; color: var(--rust); line-height: 1; display: block;
+  }
+  .svc-dur { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px; display: block; }
+
+  /* ABOUT — full width image with text overlay bottom-left */
+  .about-section {
+    position: relative; min-height: 600px;
+    display: flex; align-items: flex-end;
+    overflow: hidden;
+  }
+  .about-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to top, rgba(24,22,20,0.95) 0%, rgba(24,22,20,0.5) 45%, rgba(24,22,20,0.1) 100%),
+      url('https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=1400&q=80') center/cover no-repeat;
+  }
+  .about-content {
+    position: relative; z-index: 1;
+    padding: 72px 52px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+    width: 100%; align-items: end;
+  }
+  .about-text-block {}
+  .about-text-block .section-title { margin-bottom: 20px; }
+  .about-text-block p { font-size: 0.95rem; line-height: 1.8; color: var(--warm); margin-bottom: 14px; }
+  .about-text-block p strong { color: var(--off); font-weight: 400; }
+  .about-right { display: flex; flex-direction: column; justify-content: flex-end; gap: 24px; }
+  .about-fact {
+    border-left: 2px solid var(--rust); padding-left: 20px;
+  }
+  .about-fact-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rust); margin-bottom: 4px; display: block; }
+  .about-fact-value { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: var(--off); letter-spacing: 0.04em; }
+
+  /* BOOKING — two column split */
+  .booking-section {
+    background: var(--surface);
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 400px;
+  }
+  .booking-left {
+    padding: 80px 52px;
+    border-right: 1px solid #2e2b27;
+  }
+  .booking-left .section-title { margin-bottom: 32px; }
+  .hours-list { display: flex; flex-direction: column; gap: 16px; }
+  .hour-row { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid #2e2b27; }
+  .hour-row:last-child { border-bottom: none; }
+  .hour-day { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .hour-time { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; color: var(--off); letter-spacing: 0.04em; }
+  .booking-right {
+    padding: 80px 52px;
+    display: flex; flex-direction: column; justify-content: center; gap: 28px;
+  }
+  .booking-desc { font-size: 1rem; line-height: 1.8; color: var(--warm); }
+  .booking-desc strong { color: var(--off); font-weight: 400; }
+  .booking-actions { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg); padding: 40px 52px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid #2e2b27; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; color: var(--off); letter-spacing: 0.08em; }
+  .footer-logo em { color: var(--rust); font-style: normal; }
+  .footer-addr { font-size: 0.75rem; color: var(--muted); text-align: center; line-height: 1.7; }
+  .footer-right { font-size: 0.75rem; color: var(--muted); text-align: right; line-height: 1.7; }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.on { opacity: 1; transform: translateY(0); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-img { min-height: 50vh; }
+    .about-content { grid-template-columns: 1fr; }
+    .booking-section { grid-template-columns: 1fr; }
+    .booking-left { border-right: none; border-bottom: 1px solid #2e2b27; }
+    .reviews-ticker { flex-direction: column; }
+  }
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hero-content { padding: 48px 20px 40px; }
+    .reviews-strip, .services-section, .about-content, .booking-left, .booking-right { padding: 56px 20px; }
+    footer { padding: 32px 20px; flex-direction: column; text-align: center; }
+    .services-header { flex-direction: column; gap: 8px; }
+    .services-note { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">GARAGE<em>/</em>KAU</div>
+  <ul class="nav-links">
+    <li><a href="#reviews">Atsiliepimai</a></li>
+    <li><a href="#services">Paslaugos</a></li>
+    <li><a href="#about">Apie</a></li>
+    <li><a href="#booking">Rezervacija</a></li>
+  </ul>
+</nav>
+
+<!-- HERO: split — image left, content right -->
+<section class="hero">
+  <div class="hero-img">
+    <div class="hero-img-bg"></div>
+    <div class="hero-img-overlay"></div>
+    <span class="hero-img-label">Vytauto pr. 83 · Kaunas · Est. 2019</span>
+  </div>
+  <div class="hero-content">
+    <div class="hero-top">
+      <span class="hero-eyebrow">Barbershop · Kaunas</span>
+      <h1 class="hero-title">GARAGE<span class="line2">BARBER.</span></h1>
+      <p class="hero-desc">Grožio ir stiliaus salonas, kuriame jūsų išvaizdą tampa meno kūriniu. Profesionali komanda, aukšta kokybė, kasdien.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="stat-num">4.9</span>
+        <span class="stat-label">Google</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">2 413</span>
+        <span class="stat-label">Treatwell</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">07–22</span>
+        <span class="stat-label">Kasdien</span>
+      </div>
+    </div>
+    <div class="hero-bottom">
+      <span class="hero-note">Vytauto pr. 83, Kaunas</span>
+      <a href="#booking" class="btn-primary">Rezervuoti →</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS — comes before services -->
+<section class="reviews-strip" id="reviews">
+  <div class="reviews-strip-header reveal">
+    <h2 class="strip-title">KĄ SAKO KLIENTAI</h2>
+    <span class="strip-rating">★★★★★ · 4.9 / 5 · 2 413 atsiliepimų</span>
+  </div>
+  <div class="reviews-ticker">
+    <div class="review-pill reveal">
+      <div class="review-pill-stars">★★★★★</div>
+      <p class="review-pill-text">"Pulkiausias barberšopas Kaune. Kainos ir kokybės santykis puikus. Lankausi jau ne pirmus metus. Visiems rekomenduoju."</p>
+      <div class="review-pill-author">— Tomas</div>
+    </div>
+    <div class="review-pill reveal">
+      <div class="review-pill-stars">★★★★★</div>
+      <p class="review-pill-text">"Viskas maksimaliai gerai — greitas aptarnavimas, įdomus pokalbis su Martynu neleido laikui prailgti. Kirpimas 10 iš 10."</p>
+      <div class="review-pill-author">— Ramunas</div>
+    </div>
+    <div class="review-pill reveal">
+      <div class="review-pill-stars">★★★★★</div>
+      <p class="review-pill-text">"Kirpimas atliktas labai gerai, netrūko dėmesio detalėms. Su kirpėju galima pasikalbėti natūraliai — jaučiasi kaip namuose."</p>
+      <div class="review-pill-author">— Marius</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="services-header reveal">
+    <div>
+      <span class="eyebrow">Paslaugos</span>
+      <h2 class="section-title">KĄ MES DAROME</h2>
+    </div>
+    <p class="services-note">Naudojame Noberu, Reuzel ir Uppercut produktus</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-item reveal">
+      <div class="svc-left">
+        <div class="svc-name">Vyrų kirpimas</div>
+        <div class="svc-desc">Klasikinis arba modernus kirpimas — tiksliai pritaikytas jūsų stiliui ir veido formai.</div>
+      </div>
+      <div class="svc-right">
+        <span class="svc-price">nuo €25</span>
+        <span class="svc-dur">40 – 60 min</span>
+      </div>
+    </div>
+    <div class="service-item reveal">
+      <div class="svc-left">
+        <div class="svc-name">Kirpimas + Barzda</div>
+        <div class="svc-desc">Pilnas combo — kirpimas ir barzdos modeliavimas. Geriausias kainos ir kokybės santykis.</div>
+      </div>
+      <div class="svc-right">
+        <span class="svc-price">nuo €35</span>
+        <span class="svc-dur">60 – 90 min</span>
+      </div>
+    </div>
+    <div class="service-item reveal">
+      <div class="svc-left">
+        <div class="svc-name">Barzdos modeliavimas</div>
+        <div class="svc-desc">Tiksli barzdos korekcija ir formavimas — nuo klasikinio iki modernaus stiliaus.</div>
+      </div>
+      <div class="svc-right">
+        <span class="svc-price">nuo €20</span>
+        <span class="svc-dur">30 – 45 min</span>
+      </div>
+    </div>
+    <div class="service-item reveal">
+      <div class="svc-left">
+        <div class="svc-name">Veido depiliacija vašku</div>
+        <div class="svc-desc">Greita ir tiksli veido depiliacija vašku profesionalo rankomis.</div>
+      </div>
+      <div class="svc-right">
+        <span class="svc-price">nuo €2</span>
+        <span class="svc-dur">~5 min</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT — full width image, text overlay bottom -->
+<section class="about-section" id="about">
+  <div class="about-bg"></div>
+  <div class="about-content">
+    <div class="about-text-block">
+      <span class="eyebrow reveal">Apie mus</span>
+      <h2 class="section-title reveal">NE TIK<br>KIRPYKLA.</h2>
+      <p class="reveal"><strong>Garage Barbershop</strong> — grožio ir stiliaus salonas nuo 2019 metų. Profesionali komanda atlieka aukštos kokybės kirpimus vyrams.</p>
+      <p class="reveal">Don't let the picture fool you — <strong>it's rock'n'roll inside.</strong> 🎸</p>
+    </div>
+    <div class="about-right">
+      <div class="about-fact reveal">
+        <span class="about-fact-label">Komanda</span>
+        <span class="about-fact-value">Martynas · Inga · Jurijus · Ieva · Mantas · Auksė</span>
+      </div>
+      <div class="about-fact reveal">
+        <span class="about-fact-label">Produktai</span>
+        <span class="about-fact-value">Noberu · Reuzel · Uppercut</span>
+      </div>
+      <div class="about-fact reveal">
+        <span class="about-fact-label">Adresas</span>
+        <span class="about-fact-value">Vytauto pr. 83, Kaunas</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING — two column split -->
+<section class="booking-section" id="booking">
+  <div class="booking-left">
+    <span class="eyebrow reveal">Darbo laikas</span>
+    <h2 class="section-title reveal">VALANDOS</h2>
+    <div class="hours-list">
+      <div class="hour-row reveal">
+        <span class="hour-day">Pirmadienis – Sekmadienis</span>
+        <span class="hour-time">07:00 – 22:00</span>
+      </div>
+    </div>
+  </div>
+  <div class="booking-right">
+    <span class="eyebrow reveal">Rezervacija</span>
+    <h2 class="section-title reveal">REZERVUOKITE</h2>
+    <p class="booking-desc reveal">Skambinkite arba tiesiog užsukite bet kurią dieną. <strong>Vytauto pr. 83, Kaunas.</strong></p>
+    <div class="booking-actions reveal">
+      <a href="tel:+37064604768" class="btn-primary">+370 646 04768</a>
+      <a href="https://maps.google.com/?q=Vytauto+pr.+83+Kaunas" target="_blank" class="btn-secondary">Rasti žemėlapyje →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">GARAGE<em>/</em>KAU</div>
+  <div class="footer-addr">Vytauto pr. 83, 44238 Kaunas<br>© 2025 Garage Barbershop</div>
+  <div class="footer-right">+370 646 04768<br>Kasdien 07:00 – 22:00</div>
+</footer>
+
+<script>
+  const items = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  items.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
